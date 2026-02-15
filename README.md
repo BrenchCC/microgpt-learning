@@ -51,7 +51,7 @@ graph TD
     F --> G[7. 观察 loss]
     G --> H[8. 生成文本]
 
-    subgraph 训练阶段
+    subgraph "训练阶段"
         F --> F1[前向计算]
         F1 --> F2[计算 loss]
         F2 --> F3[反向传播]
@@ -105,14 +105,14 @@ graph TD
     G --> H[链式法则累加梯度]
     H --> I[更新 grad 属性]
 
-    subgraph Value 节点结构
+    subgraph "Value 节点结构"
         A1[data: 前向值]
         A2[grad: 梯度]
         A3[_children: 子节点]
         A4[_local_grads: 局部导数]
     end
 
-    subgraph 反向传播
+    subgraph "反向传播"
         F --> F1[递归访问子节点]
         F1 --> F2[记录访问顺序]
         G --> G1[从输出到输入]
@@ -168,7 +168,7 @@ graph TD
     C --> D[Embedding 求和]
     D --> E[RMSNorm 归一化]
 
-    subgraph Transformer Block
+    subgraph "Transformer Block"
         E --> F[注意力子层]
         F --> G[残差连接]
         G --> H[RMSNorm 归一化]
@@ -180,14 +180,14 @@ graph TD
     K --> L[输出头投影]
     L --> M[输出 logits]
 
-    subgraph 注意力机制
+    subgraph "注意力机制"
         F --> F1[计算 q, k, v]
         F1 --> F2[追加到 keys/values 缓存]
         F2 --> F3[多 head 注意力]
         F3 --> F4[投影 + 残差]
     end
 
-    subgraph MLP
+    subgraph "MLP"
         I --> I1[fc1 线性层]
         I1 --> I2[ReLU 激活]
         I2 --> I3[fc2 线性层]
@@ -231,7 +231,7 @@ graph TD
     K -->|是| L[训练完成]
     K -->|否| B
 
-    subgraph 前向计算
+    subgraph "前向计算"
         E --> E1[Token Embedding]
         E1 --> E2[Position Embedding]
         E2 --> E3[注意力机制]
@@ -240,7 +240,7 @@ graph TD
         E5 --> E6[Softmax 成概率]
     end
 
-    subgraph 反向传播
+    subgraph "反向传播"
         H --> H1[计算局部梯度]
         H1 --> H2[链式法则累加]
         H2 --> H3[更新到参数]
@@ -367,7 +367,7 @@ graph TD
 
     E --> F[多 Head 注意力]
 
-    subgraph 单 Head 注意力
+    subgraph "单 Head 注意力"
         F --> G[提取 q_i, k_i, v_i]
         G --> H[计算注意力分数]
         H --> I[Softmax 成权重]
@@ -378,13 +378,13 @@ graph TD
     K --> L[线性投影输出]
     L --> M[残差连接]
 
-    subgraph 注意力分数计算
+    subgraph "注意力分数计算"
         H --> H1[q·k^T]
         H1 --> H2[除以 sqrt(d_k)]
         H2 --> H3[Softmax]
     end
 
-    subgraph 因果注意力掩码
+    subgraph "因果注意力掩码"
         H3 --> H4[只看过去位置]
         H4 --> H5[当前位置注意力掩码]
     end
