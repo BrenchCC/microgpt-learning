@@ -43,23 +43,23 @@ Andrej Karpathy 是人工智能领域的知名研究者，曾在 OpenAI 和 Tesl
 
 ```mermaid
 graph TD
-    A[1. 读取数据] --> B[2. 构建 tokenizer]
-    B --> C[3. 定义自动求导]
-    C --> D[4. 初始化参数]
-    D --> E[5. 定义前向计算]
-    E --> F[6. 训练循环]
-    F --> G[7. 观察 loss]
-    G --> H[8. 生成文本]
+    A[1. 读取数据] --> B[2. 构建 tokenizer];
+    B --> C[3. 定义自动求导];
+    C --> D[4. 初始化参数];
+    D --> E[5. 定义前向计算];
+    E --> F[6. 训练循环];
+    F --> G[7. 观察 loss];
+    G --> H[8. 生成文本];
 
-    subgraph "训练阶段"
-        F --> F1[前向计算]
-        F1 --> F2[计算 loss]
-        F2 --> F3[反向传播]
-        F3 --> F4[Adam 更新]
-    end
+    subgraph "训练阶段";
+        F --> F1[前向计算];
+        F1 --> F2[计算 loss];
+        F2 --> F3[反向传播];
+        F3 --> F4[Adam 更新];
+    end;
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style H fill:#bbf,stroke:#333,stroke-width:2px
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style H fill:#bbf,stroke:#333,stroke-width:2px;
 ```
 
 1. 读取文本数据（名字列表）
@@ -95,33 +95,33 @@ graph TD
 
 ```mermaid
 graph TD
-    A[创建 Value 节点] --> B[重载运算]
-    B --> C[构建计算图]
-    C --> D[前向计算 data]
+    A[创建 Value 节点] --> B[重载运算];
+    B --> C[构建计算图];
+    C --> D[前向计算 data];
 
-    D --> E[调用 backward()]
-    E --> F[DFS 构建拓扑序]
-    F --> G[反向遍历]
-    G --> H[链式法则累加梯度]
-    H --> I[更新 grad 属性]
+    D --> E[调用 backward()];
+    E --> F[DFS 构建拓扑序];
+    F --> G[反向遍历];
+    G --> H[链式法则累加梯度];
+    H --> I[更新 grad 属性];
 
-    subgraph "Value 节点结构"
-        A1[data: 前向值]
-        A2[grad: 梯度]
-        A3[_children: 子节点]
-        A4[_local_grads: 局部导数]
-    end
+    subgraph "Value 节点结构";
+        A1[data: 前向值];
+        A2[grad: 梯度];
+        A3[_children: 子节点];
+        A4[_local_grads: 局部导数];
+    end;
 
-    subgraph "反向传播"
-        F --> F1[递归访问子节点]
-        F1 --> F2[记录访问顺序]
-        G --> G1[从输出到输入]
-        G1 --> G2[计算局部梯度]
-        H --> H1[梯度累加]
-    end
+    subgraph "反向传播";
+        F --> F1[递归访问子节点];
+        F1 --> F2[记录访问顺序];
+        G --> G1[从输出到输入];
+        G1 --> G2[计算局部梯度];
+        H --> H1[梯度累加];
+    end;
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style I fill:#bbf,stroke:#333,stroke-width:2px
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style I fill:#bbf,stroke:#333,stroke-width:2px;
 ```
 
 它重载了常见运算（加减乘除、幂、`log`、`exp`、`relu`）。每做一次运算，就在计算图里新增一个节点。
@@ -163,38 +163,38 @@ graph TD
 
 ```mermaid
 graph TD
-    A[输入 token] --> B[Token Embedding]
-    B --> C[Position Embedding]
-    C --> D[Embedding 求和]
-    D --> E[RMSNorm 归一化]
+    A[输入 token] --> B[Token Embedding];
+    B --> C[Position Embedding];
+    C --> D[Embedding 求和];
+    D --> E[RMSNorm 归一化];
 
-    subgraph "Transformer Block"
-        E --> F[注意力子层]
-        F --> G[残差连接]
-        G --> H[RMSNorm 归一化]
-        H --> I[MLP 子层]
-        I --> J[残差连接]
-    end
+    subgraph "Transformer Block";
+        E --> F[注意力子层];
+        F --> G[残差连接];
+        G --> H[RMSNorm 归一化];
+        H --> I[MLP 子层];
+        I --> J[残差连接];
+    end;
 
-    J --> K[RMSNorm 归一化]
-    K --> L[输出头投影]
-    L --> M[输出 logits]
+    J --> K[RMSNorm 归一化];
+    K --> L[输出头投影];
+    L --> M[输出 logits];
 
-    subgraph "注意力机制"
-        F --> F1[计算 q, k, v]
-        F1 --> F2[追加到 keys/values 缓存]
-        F2 --> F3[多 head 注意力]
-        F3 --> F4[投影 + 残差]
-    end
+    subgraph "注意力机制";
+        F --> F1[计算 q, k, v];
+        F1 --> F2[追加到 keys/values 缓存];
+        F2 --> F3[多 head 注意力];
+        F3 --> F4[投影 + 残差];
+    end;
 
-    subgraph "MLP"
-        I --> I1[fc1 线性层]
-        I1 --> I2[ReLU 激活]
-        I2 --> I3[fc2 线性层]
-    end
+    subgraph "MLP";
+        I --> I1[fc1 线性层];
+        I1 --> I2[ReLU 激活];
+        I2 --> I3[fc2 线性层];
+    end;
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style M fill:#bbf,stroke:#333,stroke-width:2px
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style M fill:#bbf,stroke:#333,stroke-width:2px;
 ```
 
 流程：
@@ -218,36 +218,36 @@ graph TD
 
 ```mermaid
 graph TD
-    A[开始训练] --> B[取一条样本]
-    B --> C[Token 化 + BOS 标记]
-    C --> D[初始化 keys/values 缓存]
-    D --> E[逐位置前向计算]
-    E --> F[计算损失 (-log p)]
-    F --> G[平均损失]
-    G --> H[反向传播计算梯度]
-    H --> I[Adam 优化器更新参数]
-    I --> J[清空梯度]
-    J --> K{是否达到最大步数?}
-    K -->|是| L[训练完成]
-    K -->|否| B
+    A[开始训练] --> B[取一条样本];
+    B --> C[Token 化 + BOS 标记];
+    C --> D[初始化 keys/values 缓存];
+    D --> E[逐位置前向计算];
+    E --> F[计算损失 (-log p)];
+    F --> G[平均损失];
+    G --> H[反向传播计算梯度];
+    H --> I[Adam 优化器更新参数];
+    I --> J[清空梯度];
+    J --> K{是否达到最大步数?};
+    K -->|是| L[训练完成];
+    K -->|否| B;
 
-    subgraph "前向计算"
-        E --> E1[Token Embedding]
-        E1 --> E2[Position Embedding]
-        E2 --> E3[注意力机制]
-        E3 --> E4[MLP 前馈网络]
-        E4 --> E5[输出 logits]
-        E5 --> E6[Softmax 成概率]
-    end
+    subgraph "前向计算";
+        E --> E1[Token Embedding];
+        E1 --> E2[Position Embedding];
+        E2 --> E3[注意力机制];
+        E3 --> E4[MLP 前馈网络];
+        E4 --> E5[输出 logits];
+        E5 --> E6[Softmax 成概率];
+    end;
 
-    subgraph "反向传播"
-        H --> H1[计算局部梯度]
-        H1 --> H2[链式法则累加]
-        H2 --> H3[更新到参数]
-    end
+    subgraph "反向传播";
+        H --> H1[计算局部梯度];
+        H1 --> H2[链式法则累加];
+        H2 --> H3[更新到参数];
+    end;
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style L fill:#bbf,stroke:#333,stroke-width:2px
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style L fill:#bbf,stroke:#333,stroke-width:2px;
 ```
 
 每个 step 做：
@@ -357,40 +357,40 @@ vocab_size = len(uchars) + 1         # 词表大小
 
 ```mermaid
 graph TD
-    A[输入 x] --> B[线性投影 q]
-    A --> C[线性投影 k]
-    A --> D[线性投影 v]
+    A[输入 x] --> B[线性投影 q];
+    A --> C[线性投影 k];
+    A --> D[线性投影 v];
 
-    B --> E[追加到 keys/values 缓存]
-    C --> E
-    D --> E
+    B --> E[追加到 keys/values 缓存];
+    C --> E;
+    D --> E;
 
-    E --> F[多 Head 注意力]
+    E --> F[多 Head 注意力];
 
-    subgraph "单 Head 注意力"
-        F --> G[提取 q_i, k_i, v_i]
-        G --> H[计算注意力分数]
-        H --> I[Softmax 成权重]
-        I --> J[加权求和 v]
-    end
+    subgraph "单 Head 注意力";
+        F --> G[提取 q_i, k_i, v_i];
+        G --> H[计算注意力分数];
+        H --> I[Softmax 成权重];
+        I --> J[加权求和 v];
+    end;
 
-    F --> K[Concat 所有 Heads]
-    K --> L[线性投影输出]
-    L --> M[残差连接]
+    F --> K[Concat 所有 Heads];
+    K --> L[线性投影输出];
+    L --> M[残差连接];
 
-    subgraph "注意力分数计算"
-        H --> H1[q·k^T]
-        H1 --> H2[除以 sqrt(d_k)]
-        H2 --> H3[Softmax]
-    end
+    subgraph "注意力分数计算";
+        H --> H1[q·k^T];
+        H1 --> H2[除以 sqrt(d_k)];
+        H2 --> H3[Softmax];
+    end;
 
-    subgraph "因果注意力掩码"
-        H3 --> H4[只看过去位置]
-        H4 --> H5[当前位置注意力掩码]
-    end
+    subgraph "因果注意力掩码";
+        H3 --> H4[只看过去位置];
+        H4 --> H5[当前位置注意力掩码];
+    end;
 
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style M fill:#bbf,stroke:#333,stroke-width:2px
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style M fill:#bbf,stroke:#333,stroke-width:2px;
 ```
 
 ```python
